@@ -12,17 +12,21 @@ class BlinkerSystem(CarSystem):
         self.blinker = CarLight(light_pin)  # Init light
         self.blink_thread = Thread(target=self.blink)
         self.blink_thread.daemon = True
+        self.blink_thread.start()
 
     def trigger(self):
         self._sindex = 1  # ON
-        self.blink_thread.start()
 
     def release(self):
         self._sindex = 0  # OFF
 
     def blink(self):
-        while self._sindex == 1:
-            self.blinker.turn_on()
-            sleep(.5)
-            self.blinker.turn_off()
-            sleep(.5)
+        while True:
+            if self._sindex == 1:
+                self.blinker.turn_on()
+                sleep(.5)
+                self.blinker.turn_off()
+                sleep(.5)
+            else:
+                self.blinker.turn_off()
+                sleep(.1)

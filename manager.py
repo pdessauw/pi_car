@@ -1,6 +1,7 @@
 """
 
 """
+from random import randint
 from time import sleep
 
 from pi_car_systems.brakes import BrakingSystem
@@ -21,20 +22,25 @@ def init_car():
 
     return _systems
 
+
+def test_system(system, min_range=1000, max_range=3000):
+    wait_time = randint(min_range, max_range)/1000.
+    print wait_time
+
+    system.trigger()
+    sleep(wait_time)
+    system.release()
+
 if __name__ == "__main__":
     systems = init_car()
 
-    # Brake test
-    systems["brakes"].trigger()
-    sleep(1)
-    systems["brakes"].release()
+    # Test systems 1
+    test_system(systems["brakes"])
+    test_system(systems["lblinker"])
 
-    # Blinker test
-    systems["lblinker"].trigger()
-    sleep(1)
-    print systems["lblinker"]
-    sleep(1)
-    systems["lblinker"].release()
+    # Test systems 2
+    test_system(systems["brakes"])
+    test_system(systems["lblinker"])
 
     for k, v in systems.items():
         print v
