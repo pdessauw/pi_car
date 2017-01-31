@@ -1,35 +1,40 @@
 """
 
 """
-try:
-    import RPi.GPIO as GPIO
-except Exception as e:
-    print e
-    print "Loading mock library..."
-    import pi_car_library.GPIO as GPIO
-
+from time import sleep
 
 from pi_car_systems.brakes import BrakingSystem
+from pi_car_systems.blinkers import BlinkerSystem
 
-USE_CONTROLLER = False
+
+BRAKE_PIN = 5
+LEFT_BLINKER_PIN = 6
 
 
 def init_car():
-    GPIO.setmode(GPIO.BCM)
-    GPIO.setwarnings(False)
-
-    return {
-        "brakes": BrakingSystem(),
+    _systems = {
+        "brakes": BrakingSystem(BRAKE_PIN),
+        "lblinker": BlinkerSystem(LEFT_BLINKER_PIN)
     }
+
+    _systems["lblinker"].set_name("left blinker")
+
+    return _systems
 
 if __name__ == "__main__":
     systems = init_car()
 
+    # Brake test
+    systems["brakes"].trigger()
+    sleep(1)
+    systems["brakes"].release()
+
+    # Blinker test
+    systems["lblinker"].trigger()
+    sleep(1)
+    print systems["lblinker"]
+    sleep(1)
+    systems["lblinker"].release()
+
     for k, v in systems.items():
         print v
-
-    # if USE_CONTROLLER:
-    #     from pi_car_inputs import controller as input
-    # else:
-    #     from pi_car_inputs import keyboard as input
-

@@ -1,7 +1,8 @@
 """
 
 """
+from pi_car_library.systems import CarSystem
 
 
-class Gearbox(object):
+class Gearbox(CarSystem):
     pass

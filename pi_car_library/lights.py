@@ -3,13 +3,17 @@
 """
 try:
     import RPi.GPIO as GPIO
+
+    if GPIO.getmode() is None:
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setwarnings(False)
 except Exception as e:
     print e
     print "Loading mock library..."
-    import pi_car_library.GPIO as GPIO
+    from pi_car_library import GPIO as GPIO
 
 
-class Light(object):
+class CarLight(object):
 
     def __init__(self, pin):
         self.light_pin = pin

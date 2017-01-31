@@ -16,11 +16,14 @@ class CarSystem(object):
     def release(self, **params):
         raise NotImplementedError()
 
+    def set_name(self, name):
+        self._name = name
+
     def print_status(self):
         try:
             return self._statuses[self._sindex]
         except Exception as e:
-            return "ERROR"
+            return "ERROR: " + str(e.message)
 
     def __str__(self):
         return "System: " + str(self._name).upper() + "; Status: " + self.print_status()

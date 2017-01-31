@@ -1,7 +1,8 @@
 """
 
 """
+from pi_car_library.systems import CarSystem
 
 
-class Engine(object):
+class Engine(CarSystem):
     pass
