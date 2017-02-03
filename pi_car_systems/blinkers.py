@@ -1,6 +1,5 @@
 from threading import Thread
 from time import sleep
-
 from pi_car_library.lights import CarLight
 from pi_car_library.systems import CarSystem
 
